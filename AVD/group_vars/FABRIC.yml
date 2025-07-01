@@ -77,5 +77,11 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$bCfsjvLF/HKQtYdf$kTZV/b/sieDAzhC9V18lmtw9j8ULvDmBn3.lE/It4O67zBfm4xS4B11GxClPP8wI6j260318sctP/K/2/Duxk1 # This hashes out to "admin"
-    ssh_key: ""
+    ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+amGmrQkjWjfrJACd35J6hBTzDaMZe6B0uZDd3fA6S tony@localhost.localdomain"
 
+aaa_authentication:
+  login:
+    default: local
+aaa_authorization:
+  exec: 
+    default: local
