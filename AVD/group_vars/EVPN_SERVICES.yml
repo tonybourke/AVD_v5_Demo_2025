@@ -18,10 +18,16 @@ tenants:
           - ip_address: 10.1.5.0
             remote_as: 1
             nodes: [leaf3]
+          - ip_address: 10.1.5.2
+            remote_as: 1
+            nodes: [leaf4]
         l3_interfaces:
           - interfaces:
             - Ethernet12
+            - Ethernet12
             ip_addresses:
             - 10.1.5.1/31
+            - 10.1.5.3/31
             nodes:
             - leaf3
+            - leaf4
