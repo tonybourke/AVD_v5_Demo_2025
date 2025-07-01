@@ -5,7 +5,7 @@ ansible-galaxy collection install arista.avd
 pip3 install pyavd
 pip3 install anta
 pip3 install distlib
-
+```
 ### Add SSH Key
 
 On the Linux system, run the command `ssh-keygen`
