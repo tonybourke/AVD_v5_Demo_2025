@@ -1,0 +1,10 @@
+---
+network_ports:
+  - switches: [leaf1, leaf1, leaf2, leaf2]
+    switch_ports: [Ethernet10, Ethernet11, Ethernet10, Ethernet11]
+    description: Connection to host1
+    mode: access
+    vlans: 100
+    port_channel:
+      mode: active
+      channel_id: 10

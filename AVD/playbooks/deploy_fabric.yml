@@ -1,0 +1,7 @@
+---
+- name: Deploy fabric to CVP
+  hosts: FABRIC
+  tasks:
+    - name: Deploy via eAPI
+      ansible.builtin.import_role:
+        name: arista.avd.eos_config_deploy_eapi

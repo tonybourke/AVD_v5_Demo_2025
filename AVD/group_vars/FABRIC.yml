@@ -1,0 +1,81 @@
+---
+
+fabric_name: FABRIC
+
+spine:
+  defaults:
+    bgp_as: 65001
+    loopback_ipv4_pool: 172.16.10.0/24
+    mlag: false
+  nodes:
+    - name: spine1
+      id: 11
+      mgmt_ip: 172.20.20.101/24
+    - name: spine2
+      id: 12
+      mgmt_ip: 172.20.20.102/24
+
+
+
+l3leaf:
+  defaults:
+    bgp_as: 65002-65100
+    loopback_ipv4_pool: 172.16.10.0/24 
+    vtep_loopback_ipv4_pool: 172.16.11.0/24
+    uplink_ipv4_pool: 172.16.13.0/24
+    uplink_interfaces: [Ethernet3, Ethernet4] 
+    uplink_switches: [spine1, spine2] 
+    mlag_interfaces: [Ethernet1, Ethernet2] 
+    mlag_peer_ipv4_pool: 172.16.12.0/25
+    mlag_peer_l3_ipv4_pool: 172.16.12.128/25 
+    virtual_router_mac_address: 02:1c:73:00:00:99
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384 
+    mlag: true 
+  node_groups: 
+    - group: mlag1
+      nodes:
+        - name: leaf1
+          id: 1
+          mgmt_ip: 172.20.20.11/24
+          uplink_switch_interfaces: [Ethernet3, Ethernet3]
+        - name: leaf2
+          id: 2
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+          mgmt_ip: 172.20.20.12/24
+
+    - group: mlag2
+      bgp_as: 65299 # Overriden automatic allocation for host4/R1 peering
+      nodes:
+        - name: leaf3
+          id: 3
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
+          mgmt_ip: 172.20.20.13/24
+        - name: leaf4
+          id: 4
+          uplink_switch_interfaces: [Ethernet6, Ethernet6]
+          mgmt_ip: 172.20.20.14/24
+
+
+p2p_uplinks_mtu: 1550
+
+bfd_multihop:
+  interval: 1200
+  min_rx: 1200
+  multiplier: 3
+
+bgp_update_wait_install: false
+bgp_update_wait_for_convergence: false
+
+dns_domain: atd.lab
+mgmt_interface: Management0
+mgmt_interface_vrf: MGMT
+mgmt_gateway: 172.20.20.1
+
+local_users:
+  - name: admin
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$bCfsjvLF/HKQtYdf$kTZV/b/sieDAzhC9V18lmtw9j8ULvDmBn3.lE/It4O67zBfm4xS4B11GxClPP8wI6j260318sctP/K/2/Duxk1 # This hashes out to "admin"
+    ssh_key: ""
+
